@@ -3,11 +3,11 @@
   "description": "simple deploy.",
   "env": {
     "administrador": {
-      "description": "admins",
+      "description": "Edump2101",
       "value": ""
     },
     "bot_token": {
-      "description": "el token del bot",
+      "description": "5260756695:AAFJdfqUfO8Cl835J-ocn3pdgx576rQ7_Lk",
       "value": ""
     }
   },
