@@ -51,6 +51,7 @@ def uploadFile(filename,currentBits,totalBits,speed,time,args):
 def processUploadFiles(filename,filesize,files,update,bot,message,thread=None,jdb=None):
     try:
         bot.editMessageText(message,'🤜Preparando Para Subir☁...')
+
         evidence = None
         fileid = None
         user_info = jdb.get_user(update.message.sender.username)
@@ -62,9 +63,6 @@ def processUploadFiles(filename,filesize,files,update,bot,message,thread=None,jd
                                   user_info['moodle_host'],
                                   user_info['moodle_repo_id'],
                                   proxy=proxy)
-            loged = client.login()
-
-            itererr = 0
             loged = client.login()
             itererr = 0
             if loged:
@@ -91,8 +89,7 @@ def processUploadFiles(filename,filesize,files,update,bot,message,thread=None,jd
                        tokenize = True
                     while resp is None:
                           if user_info['uploadtype'] == 'evidence':
-                             fileid,resp = client.upload_file(f,evidence,fileid,progressfunc=uploadFile,args=(bot,message,originalfile,thread),tokenize=tokenize)
-                          if user_info['uploadtype'] == 'draft':
+                             fileid,resp = client.upload_file(f,evidence,fileid,progressfunc=uploadFile,args=(bot,message,originalfile,thread),tokenize=tokenize)                          if user_info['uploadtype'] == 'draft':
                              fileid,resp = client.upload_file_draft(f,progressfunc=uploadFile,args=(bot,message,originalfile,thread),tokenize=tokenize)
                              draftlist.append(resp)
                              client = draftlist
@@ -115,7 +112,8 @@ def processUploadFiles(filename,filesize,files,update,bot,message,thread=None,jd
             tokenize = False
             if user_info['tokenize']!=0:
                tokenize = True
-            bot.editMessageText(message,'🤜Subiendo ☁ Espere Mientras... 😄')            host = user_info['moodle_host']
+            Subiendo ☁ Espere Mientras... 😄')
+            host = user_info['moodle_host']
             user = user_info['moodle_user']
             passw = user_info['moodle_password']
             remotepath = user_info['dir']
