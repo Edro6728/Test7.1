@@ -63,6 +63,9 @@ def processUploadFiles(filename,filesize,files,update,bot,message,thread=None,jd
                                   user_info['moodle_repo_id'],
                                   proxy=proxy)
             loged = client.login()
+
+            itererr = 0
+            loged = client.login()
             itererr = 0
             if loged:
                 if user_info['uploadtype'] == 'evidence':
@@ -92,15 +95,11 @@ def processUploadFiles(filename,filesize,files,update,bot,message,thread=None,jd
                           if user_info['uploadtype'] == 'draft':
                              fileid,resp = client.upload_file_draft(f,progressfunc=uploadFile,args=(bot,message,originalfile,thread),tokenize=tokenize)
                              draftlist.append(resp)
-                          if user_info['uploadtype'] == 'perfil':
-                             fileid,resp = client.upload_file_perfil(f,progressfunc=uploadFile,args=(bot,message,originalfile,thread),tokenize=tokenize)
-                             draftlist.append(resp)
+                             client = draftlist
                           if user_info['uploadtype'] == 'blog':
                              fileid,resp = client.upload_file_blog(f,progressfunc=uploadFile,args=(bot,message,originalfile,thread),tokenize=tokenize)
                              draftlist.append(resp)
-                          if user_info['uploadtype'] == 'calendar':
-                             fileid,resp = client.upload_file_calendar(f,progressfunc=uploadFile,args=(bot,message,originalfile,thread),tokenize=tokenize)
-                             draftlist.append(resp)
+                             client = draftlist
                           iter += 1
                           if iter>=10:
                               break
@@ -109,15 +108,14 @@ def processUploadFiles(filename,filesize,files,update,bot,message,thread=None,jd
                     try:
                         client.saveEvidence(evidence)
                     except:pass
-                return draftlist
+                return client
             else:
                 bot.editMessageText(message,'❌Error En La Pagina❌')
         elif cloudtype == 'cloud':
             tokenize = False
             if user_info['tokenize']!=0:
                tokenize = True
-            bot.editMessageText(message,'🤜Subiendo ☁ Espere Mientras... 😄')
-            host = user_info['moodle_host']
+            bot.editMessageText(message,'🤜Subiendo ☁ Espere Mientras... 😄')            host = user_info['moodle_host']
             user = user_info['moodle_user']
             passw = user_info['moodle_password']
             remotepath = user_info['dir']
@@ -168,6 +166,7 @@ def processFile(update,bot,message,file,thread=None,jdb=None):
     if client:
         if getUser['cloudtype'] == 'moodle':
             if getUser['uploadtype'] == 'evidence':
+
                 try:
                     evidname = str(file).split('.')[0]
                     txtname = evidname + '.txt'
@@ -180,9 +179,9 @@ def processFile(update,bot,message,file,thread=None,jdb=None):
                            findex+=1
                     client.logout()
                 except:pass
-            if getUser['uploadtype'] == 'draft' or getUser['uploadtype'] == 'blog' or getUser['uploadtype'] == 'calendar':
+            if getUser['uploadtype'] == 'draft' or getUser['uploadtype'] == 'blog':
                for draft in client:
-                   files.append({'name':draft['file'],'directurl':draft['url']})
+               for draft in client:                   files.append({'name':draft['file'],'directurl':draft['url']})
         else:
             for data in client:
                 files.append({'name':data['name'],'directurl':data['url']})
@@ -521,8 +520,7 @@ def onmessage(update,bot:ObigramClient):
              if loged:
                  evidences = client.getEvidences()
                  evindex = evidences[findex]
-                 txtname = evindex['name']+'.txt'
-                 sendTxt(txtname,evindex['files'],update,bot)
+                 txtname = evindex['name']+'.txt''                 sendTxt(txtname,evindex['files'],update,bot)
                  client.logout()
                  bot.editMessageText(message,'TxT Aqui👇')
              else:
