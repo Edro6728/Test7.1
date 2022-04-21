@@ -518,14 +518,15 @@ def onmessage(update,bot:ObigramClient):
                                    user_info['moodle_repo_id'],proxy=proxy)
              loged = client.login()
              if loged:
+
                  evidences = client.getEvidences()
                  evindex = evidences[findex]
-                 txtname = evindex['name']+'.txt''                 sendTxt(txtname,evindex['files'],update,bot)
+                 txtname = evindex['name']+'.txt'
+                 sendTxt(txtname,evindex['files'],update,bot)
                  client.logout()
                  bot.editMessageText(message,'TxT Aqui👇')
              else:
-                bot.editMessageText(message,'❌Error y Causas🧐\n1-Revise su Cuenta\n2-Servidor Desabilitado: '+client.path)
-             pass
+                bot.editMessageText(message,'❌Error y Causas🧐\n1-Revise su Cuenta\n2-Servidor Desabilitado: '+client.path)             pass
         elif '/del_' in msgText and user_info['cloudtype']=='moodle':
             findex = int(str(msgText).split('_')[1])
             proxy = ProxyCloud.parse(user_info['proxy'])
