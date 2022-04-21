@@ -1,13 +1,13 @@
 ﻿{
-  "name": "JsonForDeploy by @vpservice67",
+  "name": "JsonForDeploy by @Edump2101",
   "description": "simple deploy.",
   "env": {
     "administrador": {
-      "description": "Edump2101",
+      "description": "ADMIN",
       "value": ""
     },
     "bot_token": {
-      "description": "5260756695:AAFJdfqUfO8Cl835J-ocn3pdgx576rQ7_Lk",
+      "description": "@BotFather",
       "value": ""
     }
   },
